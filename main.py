@@ -1,7 +1,9 @@
 import pygame #@UnresolvedImport
+from pygame.locals import *
 import os, sys
 import random
 import array
+
 red = (255, 0,0)
 black = (0,0,20)
 
@@ -120,20 +122,30 @@ mapArraysX = [0, 0, 0, 100, 100, 200]
 mapsArraysY = [0, 100,200, 100, 200, 300]
 basicLayoutArray(mapArraysX, mapsArraysY)
 
+
 while end == False:
     moveX = 0
     moveY = 0
     renderSprites.draw(screen)   
     pygame.display.flip()
     screen.fill(black)
+    
+    keyDown = pygame.key.get_pressed()
+    if keyDown[K_LEFT]:
+        moveX -= 3
+        ship.move(moveX, moveY)
+        screen.blit(ship.image, ship)
+        ship.update(renderSprites)
+    if keyDown[K_RIGHT]:
+        moveX += 3
+        ship.move(moveX, moveY)
+        screen.blit(ship.image, ship)
+        ship.update(renderSprites)
+            
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             end=True
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                moveX -= 3;
-                ship.move(moveX, moveY)
-                ship.update(renderSprites)
+        
             if event.key == pygame.K_RIGHT:
                 ship.moveRight()
                 ship.updatePos();
