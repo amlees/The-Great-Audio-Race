@@ -3,6 +3,7 @@
 import os, pygame
 import Main
 from pygame.locals import *
+
 def Start():
     pygame.init()
     screen = pygame.display.set_mode([1000, 700])
@@ -33,19 +34,7 @@ def Start():
     
         
         
-    class Background(pygame.sprite.Sprite):
-        def __init__(self, color, filename, location):
-            pygame.sprite.Sprite.__init__(self)
-            
-            self.image = pygame.image.load(filename).convert()
-            self.image.set_colorkey(color)
-            self.image = pygame.transform.scale(self.image, (1000,700))
-            
-            self.rect = self.image.get_rect()
-            self.rect.x = location[0]
-            self.rect.y = location[1]
-            
-            screen.blit(self.image, self)
+    
                     
     class Button(pygame.sprite.Sprite):
         def __init__(self, color, filename, location):
