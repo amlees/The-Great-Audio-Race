@@ -34,7 +34,7 @@ def Game():
         def __init__(self, x, y):
             pygame.sprite.Sprite.__init__(self)
             self.image = pygame.Surface([100,100])
-            self.image.fill(red)
+            self.image = pygame.image.load("asteroid3.png")
             self.rect = self.image.get_rect()
             self.rect.top = y
             self.rect.left = x
@@ -111,20 +111,20 @@ def Game():
     pygame.init()
     #create an instance of mainPerson
     #create an initial instance of obstacle
-    obstacle = mainMusicObstacle(300, 300);
+    #obstacle = mainMusicObstacle(300, 300);
     global screen;
     screen = pygame.display.set_mode([1080, 700]);
     #ship = spaceShip(510, 615, screen);
     ship = spaceShip(540, 600);
     #refresh the screen
     renderSprites = pygame.sprite.RenderPlain()
-    renderSprites.add(obstacle)
+    #renderSprites.add(obstacle)
     renderSprites.add(ship)
     global time;
     time = 0;
     end = False
     mapArraysX = [0, 0, 0, 100, 100, 200]
-    mapsArraysY = [0, 100,200, 100, 200, 300]
+    mapsArraysY = [0, 100, 200, 100, 200, 300]
     basicLayoutArray(mapArraysX, mapsArraysY)
     
     
@@ -197,7 +197,7 @@ def Game():
                     
                 
     
-        obstacle.update(renderSprites)
+        #obstacle.update(renderSprites)
     
     
     pygame.quit()
