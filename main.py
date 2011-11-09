@@ -6,11 +6,26 @@ import os, sys
 import random
 import array
 import MainMenu
+brickGroup = pygame.sprite.Group();
 
 def Game():
 
     red = (255, 0,0)
     black = (0,0,20)
+    
+    class Background(pygame.sprite.Sprite):
+        def __init__(self, color, filename, location):
+            pygame.sprite.Sprite.__init__(self)
+            
+            self.image = pygame.image.load(filename).convert()
+            self.image.set_colorkey(color)
+            self.image = pygame.transform.scale(self.image, (1000,700))
+            
+            self.rect = self.image.get_rect()
+            self.rect.x = location[0]
+            self.rect.y = location[1]
+            
+            screen.blit(self.image, self)
     
     class mainMusicObstacle(pygame.sprite.Sprite):
         """class that controls the main race obstacles"""
@@ -46,6 +61,7 @@ def Game():
     
     def basicLayoutArray(mapArraysX, mapArraysY):
         x = 0;
+
         for i in  mapArraysX:
             posX = mapArraysX[x]
             posY = mapArraysY[x];
@@ -55,7 +71,11 @@ def Game():
             renderSprites.add(brick);
             brick.update(renderSprites)
             x= x+1;
-            
+            brickGroup.add(brick);
+            print brickGroup;
+            #global background
+            #background = Background((0,0,0), "game-background.png", (0,0))
+            #pygame.display.update()
     
     
     def addBlockPerBeatX(positionObstacle):
@@ -107,7 +127,12 @@ def Game():
             old_x=self.rect.left
             new_x=old_x+self.change_x
             self.rect.left = new_x
-    
+            
+        def getCollision(self, object):
+            if pygame.sprite.spritecollideany(self, brickGroup):
+                ship.rect.x = 540
+                
+                
     pygame.init()
     #create an instance of mainPerson
     #create an initial instance of obstacle
@@ -123,8 +148,8 @@ def Game():
     global time;
     time = 0;
     end = False
-    mapArraysX = [0, 0, 0, 100, 100, 200]
-    mapsArraysY = [0, 100, 200, 100, 200, 300]
+    mapArraysX = [0, 0, 0, 100, 100, 200, 800, 900, 950, 750,]
+    mapsArraysY = [0, 100, 200, 100, 190, 300,300,200, 290, 100,]
     basicLayoutArray(mapArraysX, mapsArraysY)
     
     
@@ -134,6 +159,13 @@ def Game():
         renderSprites.draw(screen)   
         pygame.display.flip()
         screen.fill(black)
+        
+        spaceShip.getCollision(ship, brickGroup)
+        
+        for brick in brickGroup:
+            brick.rect.y = brick.rect.y + 1
+            if brick.rect.y >= 700:
+                brick.rect.y = 0
         
         keyDown = pygame.key.get_pressed()
         if keyDown[K_LEFT]:
